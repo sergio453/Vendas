@@ -1,4 +1,4 @@
-package io.github.dougllasfps.domain.repositorio;
+package io.github.dougllasfps.domain.repository;
 
 import io.github.dougllasfps.domain.entity.Cliente;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -18,4 +18,7 @@ public interface Clientes extends JpaRepository<Cliente, Integer>{
     void deleteByNome(String nome);
 
     boolean existsByNome(String nome);
+
+    @Query(" SELECT c FROM Cliente c LEFT JOIN FETCH c.pedidos WHERE c.id = :id ")
+    Cliente findClienteFetchPedidos(@Param("id") Integer id);
 }
