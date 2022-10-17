@@ -50,11 +50,34 @@ public class ClienteController {
 
     }
 
+
+
+
+
+
+
+    @PatchMapping("{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void updatePath (@PathVariable Integer id,
+                                    @RequestBody @Valid Cliente cliente){
+        clientes.findById(id).map( clienteExistente -> {
+            cliente.setId(clienteExistente.getId());
+            cliente.setCpf(clienteExistente.getCpf());
+            cliente.setIdade(clienteExistente.getIdade());
+            return clienteExistente;
+        }).orElseThrow( () ->
+                new ResponseStatusException(HttpStatus.NOT_FOUND, "Cliente não encontrado"));
+    }
+
+
+
+
+
+
     @PutMapping("{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void update( @PathVariable Integer id,
                                   @RequestBody @Valid Cliente cliente){
-
         clientes
                 .findById(id)
                 .map( clienteExistente -> {

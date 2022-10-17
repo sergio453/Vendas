@@ -8,6 +8,7 @@ import org.hibernate.validator.constraints.br.CPF;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 import java.util.Set;
 
 @NoArgsConstructor
@@ -18,7 +19,7 @@ import java.util.Set;
 public class Cliente {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)    //Para MySql usamos IDENTITY
     @Column(name = "id")
     private Integer id;
 
@@ -30,6 +31,10 @@ public class Cliente {
     @NotEmpty(message =  "{campo.cpf.obrigatorio}")
     @CPF(message = "campo.cpf.invalido{}")
     private String cpf;
+
+    @Column(name = "idade")
+    @NotNull(message = "{campo.idade.obrigatorio}")
+    private Integer idade;
 
     @JsonIgnore
     @OneToMany(mappedBy = "cliente")
